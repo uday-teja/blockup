@@ -137,15 +137,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function calculateChamfer(chamfer, thickness) {
     const chamferValue = parseInt(chamfer);
-    if (chamferValue >= 3 && chamferValue <= 15) return thickness <= 60 ? 75 : 100;
-    if (chamferValue >= 16 && chamferValue <= 25) return thickness <= 60 ? 120 : 150;
-    if (chamferValue >= 26 && chamferValue <= 40) return thickness <= 60 ? 160 : 200;
-    if (chamferValue >= 46 && chamferValue <= 60) return thickness <= 60 ? 200 : 250;
-    if (chamferValue >= 61 && chamferValue <= 75) return thickness <= 60 ? 240 : 300;
+    if (chamferValue >= 3 && chamferValue <= 15) return 100;
+    if (chamferValue >= 16 && chamferValue <= 25) return 180;
+    if (chamferValue >= 26 && chamferValue <= 50) return 280;
+    if (chamferValue >= 51 && chamferValue <= 75) return 380;
     if (chamferValue >= 76 && chamferValue <= 90) return thickness <= 60 ? 280 : 350;
     if (chamferValue >= 91 && chamferValue <= 100) return thickness <= 60 ? 300 : 400;
     return '';
   }
+
 
   function calculateMainRate(length, thickness) {
     return length <= 1900
