@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOM Viewer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js"></script>
+  </head>
+<body class="font-sans text-gray-800 bg-gray-100">
+  <header class="bg-white mb-6 shadow">
+    <div class="flex items-center justify-between p-4 container mx-auto">
+      <h1 class="text-2xl font-bold text-blue-900">Uday Precision Solutions</h1>
+    </div>
+  </header>
+  <div class="container mx-auto max-w-6xl">
+    <div class="flex items-center justify-between p-6 mb-6 bg-white rounded-lg shadow">
+      <input type="file" id="upload" accept=".xlsx" class="file-input" />
+      <button id="exportPdfBtn" class="bg-blue-600 px-4 py-2 text-white rounded">Export PDF</button>
+    </div>
+    <div id="woNumber" class="mb-4 text-center text-xl font-semibold text-blue-800"></div>
+    <div class="mb-6 bg-white rounded-lg shadow">
+      <nav class="p-4 flex space-x-4">
+        <div class="relative">
+          <button class="tab-button text-sm font-medium text-blue-600 px-3 py-2 border-b-2 border-blue-600" data-target="main">Main Plates</button>
+          <button class="gear text-lg text-gray-400 relative hover:text-gray-600" data-gear="main" title="Toggle Columns">⚙️</button>
+        </div>
+        <div class="relative">
+          <button class="tab-button px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600" data-target="round">VAP Round Parts</button>
+          <button class="gear relative text-lg text-gray-400 hover:text-gray-600" data-gear="round" title="Toggle Columns">⚙️</button>
+        </div>
+        <div class="relative">
+          <button class="tab-button px-3 py-2 text-sm font-medium text-gray-600 hover:text-blue-600" data-target="flat">VAP Flat Parts</button>
+          <button class="gear relative text-lg text-gray-400 hover:text-gray-600" data-gear="flat" title="Toggle Columns">⚙️</button>
+        </div>
+      </nav>
+    </div>
+    <div id="main" class="tab-content"></div>
+    <div id="round" class="tab-content hidden"></div>
+    <div id="flat" class="tab-content hidden"></div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
