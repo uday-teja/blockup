@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clone = tab.cloneNode(true);
     const wrapper = document.createElement('div');
     wrapper.style.padding = '20px';
-    wrapper.innerHTML = `<h1 style='text-align:center; font-size:20px; font-weight:bold;'>Demo App</h1><div style='text-align:center;'>${document.getElementById('woNumber').innerText + " Blockup Cost Sheet"}</div>`;
+    wrapper.innerHTML = `<h1 style='text-align:center; font-size:20px; font-weight:bold;'>Uday Precision Solutions</h1><div style='text-align:center;'>${document.getElementById('woNumber').innerText + " Blockup Cost Sheet"}</div>`;
     wrapper.appendChild(clone);
 
     const timestamp = new Date().toISOString().slice(0, 10);
