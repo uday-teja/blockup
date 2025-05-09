@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Column visibility popup
   document.addEventListener('click', handleDocumentClick);
 
-  // Export PDF
-  document.getElementById('exportPdfBtn').addEventListener('click', exportToPDF);
+  // Ensure single export event binding
+  const exportBtn = document.getElementById('exportPdfBtn');
+  exportBtn.removeEventListener('click', exportToPDF); // Prevent duplicate handler
+  exportBtn.addEventListener('click', exportToPDF);
 
   function createPopup() {
     const p = document.createElement('div');
@@ -55,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
       bom.findIndex(r => r[0] === 'VAP ROUND PARTS'),
       bom.findIndex(r => r[0] === 'VAP FLAT PARTS')
     ];
-
 
     const mainData = extractMainPlates(bom, assy, idx);
     const roundData = extractRoundParts(bom, idx);
@@ -162,8 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function createTable(popup, id, data, title, headers, hideWidth = false, skipCost = false) {
-
-    const visibleColumns = headers.map((_, i) => i).filter(i => !(hideWidth && i === constants.WIDTH) && !(skipCost && i === constants.RATE) );
+    const visibleColumns = headers.map((_, i) => i).filter(i => !(hideWidth && i === constants.WIDTH) && !(skipCost && i === constants.RATE));
     const section = document.getElementById(id);
     section.innerHTML = `<h2 class="text-xl font-semibold mb-2">${title}</h2>`;
     const card = document.createElement('div');
@@ -191,11 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
         row[constants.RATE] = '';
       }
 
-
       const chamfer = parseFloat(row[constants.CORNER_CHAMFER]) || 0;
       const rate = parseFloat(row[constants.RATE]) || 0;
       row[constants.Total] = (chamfer + rate).toFixed(2);
-
 
       tableHtml += `<tr>` + visibleColumns.map(i => `<td class="px-3 py-2 text-sm text-gray-700">${row[i] || ''}</td>`).join('') + `</tr>`;
     });
@@ -214,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (colIndex === constants.RATE) return `<td class='px-3 py-2'>₹${totalCost}</td>`;
           if (colIndex === constants.CORNER_CHAMFER) return `<td class='px-3 py-2'>₹${totalChamfer}</td>`;
           if (colIndex === constants.Total) return `<td class='px-3 py-2'>₹${grandTotal}</td>`;
-          return `<td class='px-3 py-2'></td>`; 
+          return `<td class='px-3 py-2'></td>`;
         }).join('') + `</tr>`;
     } else {
       tableHtml += `<tr class="bg-gray-50"><td colspan="${visibleColumns.length}" class="px-3 py-2 text-right text-sm font-semibold text-gray-700">Total Parts: ${totalParts} | Total Weight: ${totalWeight}</td></tr>`;
@@ -250,11 +248,17 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.innerHTML = `<h1 style='text-align:center; font-size:20px; font-weight:bold;'>Demo App</h1><div style='text-align:center;'>${document.getElementById('woNumber').innerText + " Blockup Cost Sheet"}</div>`;
     wrapper.appendChild(clone);
 
-    const timestamp = new Date().toISOString().slice(0, 10); // e.g., 2025-05-09
+    const timestamp = new Date().toISOString().slice(0, 10);
     const woNumber = document.getElementById('woNumber').innerText;
     const fileName = `${woNumber} Blockup Cost Sheet -${timestamp}.pdf`;
 
-    html2pdf().set({ margin: 10, filename: fileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 1.5 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' } }).from(wrapper).save();
+    html2pdf().set({
+      margin: 10,
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 1.5 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    }).from(wrapper).save();
   }
 
   const getBaseHeaders = () => ["Detail No", "ITEM CODE", "Description", "L/DIA", "W", "T", "Qty", "MATERIAL", "Weight", "Rate"];
