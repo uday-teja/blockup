@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function calculateMainRate(length, thickness, isDT5) {
     if(isDT5)
     {
-      return (thickness <= 60 ? 0.35 : thickness <= 100 ? 0.38 : thickness <= 150 ? 0.48 : thickness <= 200 ? 0.58 : thickness <= 250 ? 0.58 : 0.58);
+      return (thickness <= 60 ? 0.30 : thickness <= 100 ? 0.38 : thickness <= 150 ? 0.48 : thickness <= 200 ? 0.58 : thickness <= 250 ? 0.58 : 0.58);
     }
     return length <= 1900
       ? (thickness <= 30 ? 0.14 : thickness <= 60 ? 0.16 : thickness <= 100 ? 0.21 : thickness <= 150 ? 0.26 : thickness <= 200 ? 0.38 : thickness <= 250 ? 0.43 : 0.48)
