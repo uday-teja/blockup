@@ -156,8 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function calculateMainCost(length, width, rate) {
-    const c = length <= 300 ? 35 : length <= 500 ? 60 : length / 10;
-    return (((length * width) / 100) * rate + c + 80);
+    if(isDt5){
+        return (((length + width) * thickness)/100) * 0.6;
+    }
+    return ((length * width)/100) * rate;
   }
 
   function calculateTotal(data, index) {
