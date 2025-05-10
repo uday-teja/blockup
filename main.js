@@ -155,11 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
       : (thickness <= 60 ? 0.23 : thickness <= 100 ? 0.27 : thickness <= 150 ? 0.30 : thickness <= 200 ? 0.38 : thickness <= 250 ? 0.48 : 0.53);
   }
 
-  function calculateMainCost(length, width, rate) {
-    if(isDt5){
+  function calculateMainCost(length, width,thickness, rate, isDt5) {
+    if(isDt5)
+    {
         return (((length + width) * thickness)/100) * 0.6;
     }
     return ((length * width)/100) * rate;
+    // const c = length <= 300 ? 35 : length <= 500 ? 60 : length / 10;
+    // return (((length * width) / 100) * rate + c + 80);
   }
 
   function calculateTotal(data, index) {
@@ -190,8 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const width = parseFloat(row[constants.WIDTH]);
       const thickness = parseFloat(row[constants.THICKNESS]);
       if (!skipCost && !isNaN(length) && !isNaN(width) && !isNaN(thickness)) {
-        const rate = calculateMainRate(length, thickness, String(row[1]).includes('DT5'));
-        row[constants.RATE] = calculateMainCost(length, width, rate).toFixed(2);
+        const rate = calculateMainRate(length, thickness);
+        row[constants.RATE] = calculateMainCost(length, width, thickness, rate, String(row[1]).includes('DT-5') || String(row[1]).includes('DT5')).toFixed(2);
       } else {
         row[constants.RATE] = '';
       }
